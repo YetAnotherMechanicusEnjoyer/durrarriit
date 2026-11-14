@@ -4,8 +4,11 @@ section .text
   extern write
 
 putstr:
-  call strlen
+  push r12
+  push r13
+
   mov r12, rdi
+  call strlen
   cmp rax, -1
   je .exit
   mov r13, rax
@@ -16,4 +19,6 @@ putstr:
   call write
 
 .exit:
+  pop r13
+  pop r12
   ret
