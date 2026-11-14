@@ -2,12 +2,9 @@ section .text
   global write
 
 write:
-  mov r12, rdi
-  mov r13, rsi
-
-  mov rax, 1
-  mov rdi, 1
-  mov rsi, r12
-  mov rdx, r13
-  syscall
+  mov rdx, rsi
+  mov rsi, rdi
+  mov rax, 0x1
+  mov rdi, 0x1
+  syscall ; write
   ret
