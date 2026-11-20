@@ -1,10 +1,13 @@
+%define SYS_MMAP 0x9
+%define SYS_MUNMAP 0xB
+
 section .text
   global alloc
   global free
 
 alloc: ; rdi: usize -> ptr
   mov rsi, rdi
-  mov rax, 0x9
+  mov rax, SYS_MMAP
   xor rdi, rdi
   mov rdx, 0x3
   mov r10, 0x22
@@ -14,6 +17,6 @@ alloc: ; rdi: usize -> ptr
   ret
 
 free: ; rdi: ptr
-  mov rax, 0xB
+  mov rax, SYS_MUNMAP
   syscall ; sys_munmap
   ret
