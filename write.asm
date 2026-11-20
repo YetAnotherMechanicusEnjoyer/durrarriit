@@ -1,7 +1,7 @@
 section .text
   global write
 
-write:
+write: ; rdi: string, rsi: usize
   mov rdx, rsi
   mov rsi, rdi
   mov rax, 0x1

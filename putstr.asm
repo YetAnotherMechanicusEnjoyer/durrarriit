@@ -3,7 +3,7 @@ section .text
   extern strlen
   extern write
 
-putstr:
+putstr: ; rdi: string -> usize
   push r12
   push r13
 

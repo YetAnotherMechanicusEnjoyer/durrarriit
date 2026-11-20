@@ -2,7 +2,7 @@ section .text
   global strcat
   extern strlen
 
-strcat:
+strcat: ; rdi: string, rsi: string -> string
   push r12
   push r13
   push r14

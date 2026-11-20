@@ -1,7 +1,7 @@
 section .text
   global strlen
 
-strlen:
+strlen: ; rdi: string -> usize
   mov rax, -0x1
   test rdi, rdi
   je .exit

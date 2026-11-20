@@ -2,7 +2,7 @@ section .text
   global alloc
   global free
 
-alloc:
+alloc: ; rdi: usize -> ptr
   mov rsi, rdi
   mov rax, 0x9
   xor rdi, rdi
@@ -13,7 +13,7 @@ alloc:
   syscall ; sys_mmap
   ret
 
-free:
+free: ; rdi: ptr
   mov rax, 0xB
   syscall ; sys_munmap
   ret
