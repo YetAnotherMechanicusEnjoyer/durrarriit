@@ -26,8 +26,7 @@ _start:
 .putstr:
   mov rdi, rax
   call putstr
-  push 0xA
-  mov rdi, rsp
+  mov rdi, 0xA
   call putchar
 
 .exit:
