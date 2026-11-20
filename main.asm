@@ -14,8 +14,7 @@ _start:
   mov rbp, rsp
 
 .copy:
-  mov rdi, 0xF
-  lea rsi, [rel hello]
+  lea rdi, [rel hello]
   call strdup
 
 .strcat:

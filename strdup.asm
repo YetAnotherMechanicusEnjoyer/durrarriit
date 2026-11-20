@@ -3,29 +3,28 @@ section .text
   extern alloc
   extern strlen
 
-strdup:
+strdup: ; rdi: string
   push r12
   push r13
 
-  mov r13, rsi
-  call alloc
-  test rax, rax
-  js .error
-  mov r12, rax
-
-  mov rdi, r13
+  mov r12, rdi
   call strlen
   cmp rax, -0x1
   je .error
+  mov r13, rax
+
+  lea rdi, [rax + 1]
+  call alloc
+  test rax, rax
+  js .error
 
 .copy:
-  mov rdi, r12
-  mov rsi, r13
-  lea rcx, [rax + 1]
+  mov rdi, rax
+  mov rsi, r12
+  lea rcx, [r13 + 1]
   cld
   rep movsb
 
-  mov rax, r12
   jmp .exit
 
 .error:
@@ -35,4 +34,3 @@ strdup:
   pop r13
   pop r12
   ret
-
