@@ -7,7 +7,6 @@
 %define SYS_WRITE 0x1
 %define SYS_OPEN 0x2
 %define SYS_CLOSE 0x3
-%define SYS_EXIT 0x60
 
 %define NEWLINE 0xA
 

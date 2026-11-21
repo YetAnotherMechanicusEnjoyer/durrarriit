@@ -1,4 +1,13 @@
 %define STDOUT 0x1
+%define NEWLINE 0xA
+
+%define SYS_EXIT 0x3C
+
+%macro exit 1
+  mov rax, SYS_EXIT
+  mov rdi, %1
+  syscall
+%endmacro
 
 section .rodata
   hello db "This is", 0x0
@@ -32,7 +41,7 @@ _start:
 .putstr:
   mov rdi, rax
   call putstr
-  mov rdi, 0xA
+  mov rdi, NEWLINE
   call putchar
 
 .fs:
@@ -46,6 +55,4 @@ _start:
 .exit:
   mov rsp, rbp
   pop rbp
-  mov rax, 0x3C
-  xor rdi, rdi
-  syscall ; exit
+  exit 0x0
