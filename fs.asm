@@ -21,6 +21,10 @@ section .text
   global close_fs
   global read_fs
 
+  extern putstr
+  extern dynstr_push_buf
+  extern dynstr_push_char
+
 open_fs: ; rdi: filename
   mov rax, SYS_OPEN
   mov rsi, O_RDONLY
@@ -33,9 +37,11 @@ close_fs: ; rdi: fd
   syscall
   ret
 
-read_fs: ; rdi: fd
+read_fs: ; rdi: fd, rsi: string
   push r12
+  push r13
   mov r12, rdi
+  mov r13, rsi
 
 .loop:
   mov rdi, r12
@@ -47,21 +53,19 @@ read_fs: ; rdi: fd
   cmp rax, 0x0
   jle .exit
 
-  mov rdx, rax
-  mov rax, SYS_WRITE
-  mov rdi, STDOUT
+  mov rdi, r13
   mov rsi, file_buffer
-  syscall
+  mov rdx, rax
+  call dynstr_push_buf
 
   jmp .loop
 
 .exit:
-  mov [file_buffer], NEWLINE
-  mov rax, SYS_WRITE
-  mov rdi, STDOUT
-  mov rsi, file_buffer
-  mov rdx, 0x1
-  syscall
+  mov rdi, r13
+  mov sil, NEWLINE
+  call dynstr_push_char
+  mov rdi, r12 ; restore fd
 
+  pop r13
   pop r12
   ret
