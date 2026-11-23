@@ -1,1 +1,19 @@
-*.asm
+[project]
+name = "durrarriit"
+output = "build/durrarriit"
+
+[build]
+dir = "build"
+format = "elf64"
+debug = false
+
+[tools]
+nasm = "nasm"
+ld = "ld"
+cc = "gcc"
+
+[sources]
+root = "src"
+
+[link]
+driver = "ld"
