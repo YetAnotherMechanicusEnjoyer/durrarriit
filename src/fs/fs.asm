@@ -61,11 +61,7 @@ read_fs: ; rdi: fd, rsi: string
   jmp .loop
 
 .exit:
-  mov rdi, r13
-  mov sil, NEWLINE
-  call dynstr_push_char
   mov rdi, r12 ; restore fd
-
   pop r13
   pop r12
   ret

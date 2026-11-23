@@ -16,18 +16,12 @@ section .bss
   str_obj resb 24
 
 section .rodata
-  hello db "This is", 0x0
-  world db " a very long text!", 0x0
-  file db "LICENSE", 0x0
+  msg db "'s content:", 0x0
+  file db ".gitignore", 0x0
 
 section .text
   global main
 
-  extern strcat
-  extern strdup
-
-  extern write
-  extern putchar
   extern putstr
 
   extern dynstr_init
@@ -38,28 +32,23 @@ section .text
   extern open_fs
   extern close_fs
   extern read_fs
-  extern free
 
 main:
   lea rdi, [rel str_obj]
   call dynstr_init
 
   lea rdi, [rel str_obj]
-  lea rsi, [rel hello]
+  lea rsi, [rel file]
   call dynstr_push_str
 
   lea rdi, [rel str_obj]
-  lea rsi, [rel world]
+  lea rsi, [rel msg]
   call dynstr_push_str
 
   lea rdi, [rel str_obj]
   mov sil, NEWLINE
   call dynstr_push_char
 
-  mov rdi, [rel str_obj]
-  call putstr
-
-.fs:
   lea rdi, [rel file]
   call open_fs
   mov r12, rdi
@@ -74,3 +63,5 @@ main:
   lea rdi, [rel str_obj]
   call dynstr_free
 
+  xor rax, rax
+  ret
