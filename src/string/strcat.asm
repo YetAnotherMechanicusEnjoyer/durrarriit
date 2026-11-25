@@ -30,7 +30,7 @@ strcat: ; rdi: string, rsi: string -> string
   jmp .exit
 
 .error:
-  mov rax, -0x1
+  or rax, -0x1
 
 .exit:
   pop r14

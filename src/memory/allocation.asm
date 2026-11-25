@@ -22,7 +22,7 @@ alloc: ; rdi: usize -> ptr
   or rdx, PROT_WRITE
   mov r10, MAP_PRIVATE
   or r10, MAP_ANONYMOUS
-  mov r8, -0x1
+  or r8, -0x1
   xor r9, r9
   syscall ; sys_mmap
   ret

@@ -10,7 +10,7 @@ section .text
   extern alloc
 
 strlen: ; rdi: string -> usize
-  mov rax, -0x1
+  or rax, -0x1
   test rdi, rdi
   je .exit
 

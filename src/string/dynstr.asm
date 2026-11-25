@@ -74,7 +74,7 @@ dynstr_reserve: ; rdi: ptr, rsi: extra_bytes -> -1!0
   jmp .exit
 
 .error:
-  mov rax, -0x1
+  or rax, -0x1
 
 .exit:
   pop r13
@@ -115,7 +115,7 @@ dynstr_push_buf: ; rdi: ptr, rsi: buf, rdx: count -> -1!0
   jmp .exit
 
 .error:
-  mov rax, -0x1
+  or rax, -0x1
 
 .exit:
   pop r14
@@ -142,7 +142,7 @@ dynstr_push_str: ; rdi: ptr, rsi: string -> -1!0
   jmp .exit
 
 .error:
-  mov rax, -0x1
+  or rax, -0x1
 
 .exit:
   pop r13
