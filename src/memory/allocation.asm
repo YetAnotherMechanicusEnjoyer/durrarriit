@@ -33,7 +33,7 @@ realloc: ; rdi: ptr, rsi: old_size, rdx: new_size -> ptr
   syscall
   ret
 
-free: ; rdi: ptr
+free: ; rdi: ptr ; rsi: size
   mov rax, SYS_MUNMAP
   syscall ; sys_munmap
   ret

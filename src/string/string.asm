@@ -83,7 +83,7 @@ strncmp: ; rdi: s1, rsi: s2, rdx: n -> usize
   xor eax, eax
   ret
 
-strcmp: ; rdi: s1, rsi: s2 -> usize
+strcmp: ; rdi: s1, rsi: s2 -> int
 .loop:
   mov al, [rdi]
   mov r8b, [rsi]
