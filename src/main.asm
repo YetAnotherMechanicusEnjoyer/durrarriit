@@ -19,6 +19,7 @@ section .rodata
   msg db "'s content:", 0x0
   err_no_arg db "Error: missing file argument", 0xA, 0x0
   err_open db "Error: opening file", 0xA, 0x0
+  test_msg db 0xA, "======================", 0xA, "TESTS", 0xA, "======================", 0xA, 0x0
 
 section .text
   global main
@@ -37,6 +38,8 @@ section .text
   extern open_fs
   extern close_fs
   extern read_fs
+
+  extern tests
 
 main: ; rdi: argc, rsi: argv, rdx: envp -> exit_code
   push r12
@@ -101,6 +104,9 @@ main: ; rdi: argc, rsi: argv, rdx: envp -> exit_code
   mov rax, 0x2
 
 .exit:
+  lea rdi, [rel test_msg]
+  call putstr
+  call tests
   pop r13
   pop r12
   ret
