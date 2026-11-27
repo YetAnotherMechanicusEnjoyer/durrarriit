@@ -3,6 +3,7 @@ section .text
   global putchar
   global putstr
   global puterr
+  global print
   extern strlen
 
 %define STDOUT 0x1
@@ -69,4 +70,22 @@ puterr: ; rdi: string -> -1!0
   pop r13
   pop r12
   xor rax, rax
+  ret
+
+print: ; rdi: string, rsi: fd
+  push r12
+  push r13
+
+  mov r12, rdi
+  mov r13, rsi
+  call strlen
+
+  mov rdi, r12
+  mov rsi, rax
+  mov rdx, r13
+  call write
+
+.exit:
+  pop r13
+  pop r12
   ret
