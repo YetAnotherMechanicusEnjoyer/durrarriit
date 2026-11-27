@@ -11,6 +11,7 @@ debug = false
 nasm = "nasm"
 ld = "ld"
 cc = "gcc"
+ar = "ar"
 
 [sources]
 root = "src"
