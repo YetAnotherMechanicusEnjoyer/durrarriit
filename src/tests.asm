@@ -1,3 +1,4 @@
+%define NEWLINE 0xA
 
 section .rodata
   test_1 db "hello   world", 0
@@ -15,8 +16,8 @@ section .rodata
   test_5 db 0
   sep_5 db " ", 0
 
-  null_msg db "(NULL)", 0xA, 0
-  newline db 0xA, 0
+  null_msg db "(NULL)", NEWLINE, 0
+  newline db NEWLINE, 0
 
 section .text
   global tests
@@ -26,7 +27,9 @@ section .text
   extern free
   extern putstr
 
-tests:
+tests: ; rdi: string, rsi: separators
+  call test_slice
+
   lea rdi, [rel test_1]
   lea rsi, [rel sep_1]
   call test_slice

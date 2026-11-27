@@ -17,13 +17,17 @@ section .bss
 
 section .rodata
   msg db "'s content:", 0x0
-  err_no_arg db "Error: missing file argument", 0xA, 0x0
-  err_open db "Error: opening file", 0xA, 0x0
-  test_msg db 0xA, "======================", 0xA, "TESTS", 0xA, "======================", 0xA, 0x0
+  err_no_arg db "Error: missing file argument", NEWLINE, 0x0
+  err_open db "Error: opening file", NEWLINE, 0x0
+  test_msg db NEWLINE, "======================", NEWLINE, "TESTS", NEWLINE, "======================", NEWLINE, 0x0
+  separators db " ", NEWLINE, 0x0
 
 section .text
   global main
 
+  extern strlen
+
+  extern print
   extern putstr
   extern puterr
 
@@ -36,6 +40,7 @@ section .text
   extern dynstr_free
 
   extern open_fs
+  extern create_fs
   extern close_fs
   extern read_fs
 
@@ -68,6 +73,7 @@ main: ; rdi: argc, rsi: argv, rdx: envp -> exit_code
   mov sil, NEWLINE
   call dynstr_push_char
 
+.read_input:
   mov rdi, r12
   call open_fs
   cmp rax, 0x0
@@ -83,6 +89,28 @@ main: ; rdi: argc, rsi: argv, rdx: envp -> exit_code
 
   mov rdi, [rel str_obj]
   call putstr
+
+.write_output:
+  mov rdi, 0x2
+  call args_get
+  test rax, rax
+  jz .error_no_arg
+  mov r12, rax
+
+  mov rdi, r12
+  call create_fs
+
+  mov rdi, [rel str_obj]
+  mov rsi, rax
+  call print
+
+.tests:
+  lea rdi, [rel test_msg]
+  call putstr
+
+  mov rdi, [rel str_obj]
+  lea rsi, [rel separators]
+  call tests
 
   lea rdi, [rel str_obj]
   call dynstr_free
@@ -104,9 +132,6 @@ main: ; rdi: argc, rsi: argv, rdx: envp -> exit_code
   mov rax, 0x2
 
 .exit:
-  lea rdi, [rel test_msg]
-  call putstr
-  call tests
   pop r13
   pop r12
   ret
