@@ -1,11 +1,12 @@
 [project]
-name = "durrarriit"
-output = "build/durrarriit"
+name = "libasm"
+output = "build/libasm.a"
 
 [build]
 dir = "build"
 format = "elf64"
 debug = false
+type = "staticlib"
 
 [tools]
 nasm = "nasm"
@@ -14,7 +15,7 @@ cc = "gcc"
 ar = "ar"
 
 [sources]
-root = "src"
+root = "lib"
 
 [link]
 driver = "ld"
