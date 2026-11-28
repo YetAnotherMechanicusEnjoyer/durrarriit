@@ -1,0 +1,21 @@
+[project]
+name = "durrarriit"
+output = "build/durrarriit"
+
+[build]
+dir = "build"
+format = "elf64"
+debug = false
+
+[tools]
+nasm = "nasm"
+ld = "ld"
+cc = "gcc"
+ar = "ar"
+
+[sources]
+root = "lib"
+root = "src"
+
+[link]
+driver = "ld"
